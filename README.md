@@ -28,3 +28,29 @@ To define where the If block ends write `EndIf` at the end of the block.
 ### FUNCTIONS
 Use `Func <name>` to define a new function block, and `EndFunc` to define where it ends. These blocks ONLY will be executed when called by the `call <func_name>` command.\
 **TODO:** Add parameters for the functions.
+
+## Console Library
+Remember to use `import console` in order to use these commands.\
+The commands of the **Console** library are the following ones:\
+`console.clear` Clears the console window.\
+`console.fore_color <color>` Gets and/or sets the color of the console window.\
+`console.title <title>` Gets and/or sets the title of the console window.
+### CLEAR COMMAND
+Use `console.clear` to clear the console window. This command **CAN'T** be used with other ones.
+### FOREGROUND AND BACKGROUND COLOR COMMANDS
+Use `console.fore_color <color>` to set the color of the console window, the `<color>` parameter is a string with the name of the color, such as `red, blue, black, white`. Also you can use the this command with **NO** parameters to only get the current console window color.\
+These conditions also applies to the `console.back_color <color>` command.
+### TITLE COMMAND
+Use `console.title <title>` to set the title of the console window, also this command can be used with **NO** parameters to only get the current console window title.
+
+## Input Library
+Remember to user `import input` in order to user these commands.\
+The commands of the **Input** library are the following ones:\
+`input.user_input` Gets the input of the user in a string.\
+`input.user_input_int` Gets the input of the user in a int.\
+`input.user_input_float` Gets the input of the user in a float.\
+`input.user_key` Gets the pressed key of the user.
+### USER INPUT COMMAND
+Use `input.user_input` command and all the other ones gets the input of the user and can be used with OTHER commands, such as `var test input.user_input`.
+### USER KEY COMMAND
+Use `input.user_key` to get the presed key by the user and can be used with OTHER commands, such as `var test input.user_key`.
