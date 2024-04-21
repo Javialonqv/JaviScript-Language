@@ -44,7 +44,7 @@ These conditions also applies to the `console.back_color <color>` command.
 Use `console.title <title>` to set the title of the console window, also this command can be used with **NO** parameters to only get the current console window title.
 
 ## Input Library
-Remember to user `import input` in order to user these commands.\
+Remember to use `import input` in order to use these commands.\
 The commands of the **Input** library are the following ones:\
 `input.user_input` Gets the input of the user in a string.\
 `input.user_input_int` Gets the input of the user in a int.\
@@ -54,3 +54,12 @@ The commands of the **Input** library are the following ones:\
 Use `input.user_input` command and all the other ones gets the input of the user and can be used with OTHER commands, such as `var test input.user_input`.
 ### USER KEY COMMAND
 Use `input.user_key` to get the presed key by the user and can be used with OTHER commands, such as `var test input.user_key`.
+
+## Convert Library
+Remember to use `import convert` in order to use these commands.\
+The commands of the **Convert** library are the following ones:\
+`convert.to_string <value>` Converts the specified value into a string value.\
+`convert.to_int <value>` Converts the specified value into a int value.\
+`convert.to_float <value>` Converts the specified value into a float value.\
+`convert.to_bool <value>` Converts the specified value into a bool value.\
+These commands can be used with other ones, such as `print convert.to_string(test)`.
