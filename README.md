@@ -52,6 +52,31 @@ These conditions also apply to the `console.back_color <color>` command.
 ### TITLE COMMAND
 Use `console.title <title>` to set the title of the console window, this command can also be used with **NO** parameters to only get the current console window title.
 
+## Convert Library
+Remember to use `import convert` in order to use these commands.
+
+The commands of the **Convert** library are the following ones:\
+`convert.to_string <value>` Converts the specified value into a string value.\
+`convert.to_int <value>` Converts the specified value into a int value.\
+`convert.to_float <value>` Converts the specified value into a float value.\
+`convert.to_bool <value>` Converts the specified value into a bool value.\
+These commands can be used with other ones, such as `print convert.to_string(test)`.
+
+## File Library
+Remember to use `import file` in order to use these commands.
+
+The commands of the **File** library are the following ones:\
+`file.create <file_path>` Creates an empty file at the specified path.
+`file.copy <original_file_path> <destination_file_path> [<overwrite>]` Copy a file at the specified file path.
+`file.move <original_file_path> <destination_file_path>` Move a file at the specified file path.
+`file.exists <file_path>` Return true if the specified file path exists.
+`file.read_line <file_path> <line>` Returns the content of the specified line of the specified file.
+`file.write_line <file_path> <line> <new_value>` Writes the specified content on the specified line on the specified file.
+### OVERWRITE PARAMETER
+Use `[<overwrite>]`, in case if the destination file path already exists, if false, an exception will occur.
+### READ AND WRITE LINE COMMANDS
+Use `file.read_line <file_path> <line>` and `file.write_line <file_path> <line> <new_value>` to read or write lines in a plain text file.
+
 ## Input Library
 Remember to use `import input` in order to use these commands.
 
@@ -64,13 +89,3 @@ The commands of the **Input** library are the following ones:\
 Use `input.user_input` command and all the other ones gets the input of the user and can be used with OTHER commands, such as `var test input.user_input`.
 ### USER KEY COMMAND
 Use `input.user_key` to get the presed key by the user and can be used with OTHER commands, such as `var test input.user_key`.
-
-## Convert Library
-Remember to use `import convert` in order to use these commands.
-
-The commands of the **Convert** library are the following ones:\
-`convert.to_string <value>` Converts the specified value into a string value.\
-`convert.to_int <value>` Converts the specified value into a int value.\
-`convert.to_float <value>` Converts the specified value into a float value.\
-`convert.to_bool <value>` Converts the specified value into a bool value.\
-These commands can be used with other ones, such as `print convert.to_string(test)`.
