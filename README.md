@@ -1,8 +1,10 @@
 # MY OWN LANGUAGE
 
 ## Syntaxis
-Each line of the code file represents a different command to execute.\
-The commands and the parameters are separated by spaces, if one of the parameters contains spaces (like arithmetic operations), you must use the **"|"** character to separate them.\
+Each line of the code file represents a different command to execute.
+
+The commands and the parameters are separated by spaces, if one of the parameters contains spaces (like arithmetic operations), you must use the **"|"** character to separate them.
+
 The commands **INSIDE** other commands, such as `convert.to_string` within `print convert.to_string`, require parameters enclosed in parentheses. The complete command should look something like this: `print convert.to_string(myVar)`.
 
 ## Main Library
@@ -26,14 +28,17 @@ Use `import <library>` to import a library into the app's execution in order to 
 ### LABELS
 Use `::<name>` (WITHOUT SPACES) in order to create a **label** than can be used to jump directly to the line where its written using the `goto <label_name>` command.
 ### IF BLOCKS
-Use `If <conditions>` in order to define an If block, than only will be executed when the conditions are met. These conditions must be written with `<value> <operator> <value>`. An example of this is `10 == 12` or `<var_name> != 10 + 2`. The number of conditions its undefined, you can write as much as you want. To separate every condition you can use `and` or `or`.\
+Use `If <conditions>` in order to define an If block, than only will be executed when the conditions are met. These conditions must be written with `<value> <operator> <value>`. An example of this is `10 == 12` or `<var_name> != 10 + 2`. The number of conditions its undefined, you can write as much as you want. To separate every condition you can use `and` or `or`.
+
 To define where the If block ends write `EndIf` at the end of the block.
 ### FUNCTIONS
-Use `Func <name>` to define a new function block, and `EndFunc` to define where it ends. These blocks will ONLY be executed when called by the `call <func_name>` command.\
+Use `Func <name>` to define a new function block, and `EndFunc` to define where it ends. These blocks will ONLY be executed when called by the `call <func_name>` command.
+
 **TODO:** Add parameters for the functions.
 
 ## Console Library
-Remember to use `import console` in order to use these commands.\
+Remember to use `import console` in order to use these commands.
+
 The commands of the **Console** library are the following ones:\
 `console.clear` Clears the console window.\
 `console.fore_color <color>` Gets and/or sets the color of the console window.\
@@ -41,13 +46,15 @@ The commands of the **Console** library are the following ones:\
 ### CLEAR COMMAND
 Use `console.clear` to clear the console window. This command **CAN'T** be used with other ones.
 ### FOREGROUND AND BACKGROUND COLOR COMMANDS
-Use `console.fore_color <color>` to set the color of the console window, the `<color>` parameter is a string with the name of the color, such as `red, blue, black, white`. Also you can use the this command with **NO** parameters to only get the current console window color.\
+Use `console.fore_color <color>` to set the color of the console window, the `<color>` parameter is a string with the name of the color, such as `red, blue, black, white`. Also you can use the this command with **NO** parameters to only get the current console window color.
+
 These conditions also apply to the `console.back_color <color>` command.
 ### TITLE COMMAND
 Use `console.title <title>` to set the title of the console window, this command can also be used with **NO** parameters to only get the current console window title.
 
 ## Input Library
-Remember to use `import input` in order to use these commands.\
+Remember to use `import input` in order to use these commands.
+
 The commands of the **Input** library are the following ones:\
 `input.user_input` Gets the input of the user in a string.\
 `input.user_input_int` Gets the input of the user in a int.\
@@ -59,7 +66,8 @@ Use `input.user_input` command and all the other ones gets the input of the user
 Use `input.user_key` to get the presed key by the user and can be used with OTHER commands, such as `var test input.user_key`.
 
 ## Convert Library
-Remember to use `import convert` in order to use these commands.\
+Remember to use `import convert` in order to use these commands.
+
 The commands of the **Convert** library are the following ones:\
 `convert.to_string <value>` Converts the specified value into a string value.\
 `convert.to_int <value>` Converts the specified value into a int value.\
