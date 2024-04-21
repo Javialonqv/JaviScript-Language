@@ -1,8 +1,11 @@
 # MY OWN LANGUAGE
 
-## Main Library:
+## Syntaxis:
 Every line of the code file represents a different command to execute.\
 The commands and the parameters are separated by a space, if one of the parameters have spaces (like arithmetic operations), you must need the **"|"** character to separate the parameters.\
+The commands **INSIDE** of other commands, for example, with the command `convert.to_string` in `print convert.to_string`, the parameters of that commmand are written between parenthesis, the complete command must be something like this: `print convert.to_string(myVar)`.
+
+## Main Library:
 The Main commands are the following ones: **[]** Indicates a parameter is optional.\
 `var <name> <value>` Declares a new variable than can be used during the runtime.\
 `print <values>` Prints the specified values in the console window.\
