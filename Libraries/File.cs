@@ -100,7 +100,7 @@ namespace MyOwnLanguageNEW.Libraries
             if (commandLength < 1) { ExceptionManager.SyntaxError(line, "file.exists <file_path>"); return false; }
             if (commandLength > 1) { ExceptionManager.UnexpectedArgs(line); return false; }
             dynamic filePath = Utilities.GetCommandParameter(command, 0, line);
-            if (!(filePath is string)) { ExceptionManager.InvalidParameterType(line, filePath.GetType().Name, 0, "String"); return; }
+            if (!(filePath is string)) { ExceptionManager.InvalidParameterType(line, filePath.GetType().Name, 0, "String"); return false; }
             return System.IO.File.Exists(filePath);
         }
         public string ReadLine(string[] command, int line)
