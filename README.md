@@ -89,3 +89,11 @@ The commands of the **Input** library are the following ones:\
 Use `input.user_input` command and all the other ones gets the input of the user and can be used with OTHER commands, such as `var test input.user_input`.
 ### USER KEY COMMAND
 Use `input.user_key` to get the presed key by the user and can be used with OTHER commands, such as `var test input.user_key`.
+
+## Math Library
+Remember to use `import math` in order to use these commands.
+
+The commands of the **Math** library are the following ones:\
+`math.sqrt <value>` Returns the square root of the specified value.
+`math.random <min_value> <max_value>` Returns a random float between the min value and a max value.
+`math.random_int <min_value> <max_value>` Returns a random int between the min value and a max value.
