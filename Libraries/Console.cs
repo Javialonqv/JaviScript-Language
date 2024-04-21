@@ -29,6 +29,7 @@ namespace MyOwnLanguageNEW.Libraries
         {
             int commandLength = Utilities.GetParametersNumber(command.Skip(1).ToArray(), line);
             if (commandLength > 0) { ExceptionManager.UnexpectedArgs(line); }
+
             System.Console.Clear();
         }
         public string ForeColor(string[] command, int line)
@@ -38,10 +39,16 @@ namespace MyOwnLanguageNEW.Libraries
             if (commandLength < 1) { ExceptionManager.UnexpectedArgs(line); }
             if (commandLength == 1)
             {
-                string color = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line);
+                dynamic color = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line);
+                if (!(color is string)) { ExceptionManager.InvalidParameterType(line, color.GetType().Name, 0, "String"); }
+
                 if (Enum.TryParse(color, true, out ConsoleColor consoleColor))
                 {
                     System.Console.ForegroundColor = consoleColor;
+                }
+                else
+                {
+                    ExceptionManager.InvalidColorName(line, color);
                 }
             }
             return System.Console.ForegroundColor.ToString();
@@ -54,9 +61,15 @@ namespace MyOwnLanguageNEW.Libraries
             if (commandLength == 1)
             {
                 string color = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line);
+                if (!(color is string)) { ExceptionManager.InvalidParameterType(line, color.GetType().Name, 0, "String"); }
+
                 if (Enum.TryParse(color, true, out ConsoleColor consoleColor))
                 {
                     System.Console.BackgroundColor = consoleColor;
+                }
+                else
+                {
+                    ExceptionManager.InvalidColorName(line, color);
                 }
             }
             return System.Console.BackgroundColor.ToString();
@@ -69,6 +82,8 @@ namespace MyOwnLanguageNEW.Libraries
             if (commandLength == 1)
             {
                 string title = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line);
+                if (!(title is string)) { ExceptionManager.InvalidParameterType(line, title.GetType().Name, 0, "String"); }
+
                 System.Console.Title = title;
             }
             return System.Console.Title;

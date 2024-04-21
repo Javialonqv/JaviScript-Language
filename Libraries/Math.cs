@@ -41,7 +41,7 @@ namespace MyOwnLanguageNEW.Libraries
             }
             else
             {
-                ExceptionManager.InvalidType(line, value.GetType().Name);
+                ExceptionManager.InvalidParameterType(line, value.GetType().Name, 0, "Int or Float");
                 return 0;
             }
         }
@@ -52,14 +52,10 @@ namespace MyOwnLanguageNEW.Libraries
             if (commandLength < 2) { ExceptionManager.SyntaxError(line, "math.random <min_value> <max_value>"); return 0; }
 
             Random random = new Random();
-            float minValue = 0;
-            float maxValue = float.MaxValue;
-
-            try { minValue = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line); }
-            catch { ExceptionManager.InvalidType(line, Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line)); }
-
-            try { maxValue = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 1, line); }
-            catch { ExceptionManager.InvalidType(line, Utilities.GetCommandParameter(command.Skip(1).ToArray(), 1, line)); }
+            dynamic minValue = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line);
+            if (!(minValue is int || minValue is float)) { ExceptionManager.InvalidParameterType(line, minValue.GetType().Name, 0, "Int or Float"); }
+            dynamic maxValue = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 1, line);
+            if (!(maxValue is int || maxValue is float)) { ExceptionManager.InvalidParameterType(line, maxValue.GetType().Name, 1, "Int or Float"); }
 
             float randomNumber = minValue + (float)random.NextDouble() * (maxValue - minValue);
             return randomNumber;
@@ -70,14 +66,10 @@ namespace MyOwnLanguageNEW.Libraries
             if (commandLength < 2) { ExceptionManager.SyntaxError(line, "math.random <min_value> <max_value>"); return 0; }
 
             Random random = new Random();
-            int minValue = 0;
-            int maxValue = int.MaxValue;
-
-            try { minValue = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line); }
-            catch { ExceptionManager.InvalidType(line, Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line)); }
-
-            try { maxValue = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 1, line); }
-            catch { ExceptionManager.InvalidType(line, Utilities.GetCommandParameter(command.Skip(1).ToArray(), 1, line)); }
+            dynamic minValue = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line);
+            if (!(minValue is int)) { ExceptionManager.InvalidParameterType(line, minValue.GetType().Name, 0, "Int"); }
+            dynamic maxValue = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 1, line);
+            if (!(maxValue is int)) { ExceptionManager.InvalidParameterType(line, maxValue.GetType().Name, 0, "Int"); }
 
             int randomNumber = random.Next(minValue, maxValue);
             return randomNumber;

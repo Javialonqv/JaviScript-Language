@@ -77,6 +77,16 @@ namespace MyOwnLanguageNEW
         {
             ShowException(line, "File Already Exists", $"ERROR: File at {filePath} already exists. Error at line {line}.");
         }
+        public static void InvalidParameterType(int line, string type, int parameter, string neededType)
+        {
+            ShowException(line, "Invalid Parameter Type", $"ERROR: Invalid {type} type at {parameter} parameter, must be {neededType}." +
+                $" Error at line {line}.");
+
+        }
+        public static void InvalidColorName(int line, string name)
+        {
+            ShowException(line, "Invalid Color Name", $"ERROR: The color name {name} is INVALID and doesn't exists.");
+        }
 
         static void ShowException(int line, string title, string message)
         {

@@ -30,7 +30,8 @@ namespace MyOwnLanguageNEW.Libraries
             if (commandLength < 1) { ExceptionManager.SyntaxError(line, "convert.to_string <value>"); }
             if (commandLength > 1) { ExceptionManager.UnexpectedArgs(line); }
 
-            string value = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line, false).ToString();
+            dynamic value = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line, false).ToString();
+
             return Utilities.GetValue(line, value).ToString();
         }
         public int ConvertToInt(string[] command, int line)
@@ -39,14 +40,12 @@ namespace MyOwnLanguageNEW.Libraries
             if (commandLength < 1) { ExceptionManager.SyntaxError(line, "convert.to_int <var_name>"); }
             if (commandLength > 1) { ExceptionManager.UnexpectedArgs(line); }
 
-            string value = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line, false).ToString();
-            //if (!Utilities.VariableExists(varName)) { ExceptionManager.UnknowType(line, varName); return 0; }
-            //Variable var = Utilities.FindVariableOfName(varName);
+            dynamic value = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line, false).ToString();
             try
             {
                 return System.Convert.ToInt32(Utilities.GetValue(line, value));
             }
-            catch { ExceptionManager.ConversionNotAllowed(line, Utilities.GetValue(line, value).GetType(), "int"); return 0; }
+            catch { ExceptionManager.ConversionNotAllowed(line, Utilities.GetValue(line, value).GetType().Name, "int"); return 0; }
         }
         public float ConvertToFloat(string[] command, int line)
         {
@@ -54,14 +53,12 @@ namespace MyOwnLanguageNEW.Libraries
             if (commandLength < 1) { ExceptionManager.SyntaxError(line, "convert.to_float <var_name>"); }
             if (commandLength > 1) { ExceptionManager.UnexpectedArgs(line); }
 
-            string value = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line, false).ToString();
-            //if (!Utilities.VariableExists(varName)) { ExceptionManager.UnknowType(line, varName); return 0; }
-            //Variable var = Utilities.FindVariableOfName(varName);
+            dynamic value = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line, false).ToString();
             try
             {
                 return System.Convert.ToSingle(Utilities.GetValue(line, value));
             }
-            catch { ExceptionManager.ConversionNotAllowed(line, Utilities.GetValue(line, value).GetType(), "float"); return 0; }
+            catch { ExceptionManager.ConversionNotAllowed(line, Utilities.GetValue(line, value).GetType().Name, "float"); return 0; }
         }
         public bool ConvertToBool(string[] command, int line)
         {
@@ -69,14 +66,12 @@ namespace MyOwnLanguageNEW.Libraries
             if (commandLength < 1) { ExceptionManager.SyntaxError(line, "convert.to_bool <var_name>"); }
             if (commandLength > 1) { ExceptionManager.UnexpectedArgs(line); }
 
-            string value = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line, false).ToString();
-            //if (!Utilities.VariableExists(varName)) { ExceptionManager.UnknowType(line, varName); return false; }
-            //Variable var = Utilities.FindVariableOfName(varName);
+            dynamic value = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line, false).ToString();
             try
             {
                 return System.Convert.ToBoolean(Utilities.GetValue(line, value));
             }
-            catch { ExceptionManager.ConversionNotAllowed(line, Utilities.GetValue(line, value).GetType(), "bool"); return false; }
+            catch { ExceptionManager.ConversionNotAllowed(line, Utilities.GetValue(line, value).GetType().Name, "bool"); return false; }
         }
 
         /*public bool TryConvertToString(string[] command, int line)

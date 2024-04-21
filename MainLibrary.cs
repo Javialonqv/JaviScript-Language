@@ -14,11 +14,11 @@ namespace MyOwnLanguageNEW
             if (commandLength < 2) { ExceptionManager.SyntaxError(line, "var <name> <value>"); return; }
             if (commandLength > 2) { ExceptionManager.UnexpectedArgs(line); return; }
 
-            //string varName = command[1];
-            //dynamic varValue = Utilities.ConcatenateValues(command.Skip(2).ToArray(), line);
-
-            string varName = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line);
+            dynamic varName = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line);
             dynamic varValue = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 1, line);
+            if (!(varName is string)) { ExceptionManager.InvalidParameterType(line, varName.GetType().Name, 0, "String"); }
+            // varValue puede ser el valor que sea.
+
             if (Init.runtimeVariables.Find(v => v.name == varName) != null) { ExceptionManager.VariableAlreadyExists(line, varName); return; }
             if (varName.Contains(".")) { ExceptionManager.VariableNameNOTAllowed(line, varName); }
             if (int.TryParse(varName.Substring(0, 1), out int i)) { ExceptionManager.VariableNameNOTAllowed(line, varName); }
@@ -34,6 +34,7 @@ namespace MyOwnLanguageNEW
             if (commandLength > 1) { ExceptionManager.UnexpectedArgs(line); return; }
 
             dynamic result = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line);
+            // result puede tener el valor que sea.
             if (printLine) { Console.WriteLine(result); }
             else { Console.Write(result); }
         }
@@ -45,6 +46,7 @@ namespace MyOwnLanguageNEW
             if (commandLength == 1)
             {
                 dynamic message = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line);
+                // message puede ser el valor que sea.
                 Console.Write(message);
             }
             Console.ReadKey(true);
@@ -56,9 +58,12 @@ namespace MyOwnLanguageNEW
             if (commandLength > 2) { ExceptionManager.UnexpectedArgs(line); return; }
             if (commandLength < 2) { ExceptionManager.SyntaxError(line, "reassign <var_name> <new_value>"); return; }
 
-            string varName = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line, false);
+            dynamic varName = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line, false);
+            if (!(varName is string)) { ExceptionManager.InvalidParameterType(line, varName.GetType().Name, 0, "String"); }
+
             if (Init.runtimeVariables.Find(v => v.name == varName) == null) { ExceptionManager.UnknowType(line, varName); return; }
             dynamic newValue = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 1, line);
+            // newValue puede tener el valor que sea.
 
             Init.runtimeVariables.Find(v => v.name == varName).value = newValue;
         }
@@ -69,11 +74,13 @@ namespace MyOwnLanguageNEW
             if (commandLength > 1) { ExceptionManager.UnexpectedArgs(line); return; }
             if (commandLength > 0)
             {
-                if (int.TryParse(Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line), out int exitCode))
+                dynamic exitCode = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line);
+                try
                 {
-                    Environment.Exit(exitCode);
+                    int code = System.Convert.ToInt32(exitCode);
+                    Environment.Exit(code);
                 }
-                else { ExceptionManager.InvalidType(line, command[2]); return; }
+                catch { ExceptionManager.InvalidParameterType(line, exitCode.GetType().Name, 0, "Int"); return; }
             }
             else
             {
@@ -87,7 +94,9 @@ namespace MyOwnLanguageNEW
             if (commandLength > 1) { ExceptionManager.UnexpectedArgs(line); return; }
             if (commandLength < 1) { ExceptionManager.SyntaxError(line, "import <library>"); return; }
 
-            string library = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line);
+            dynamic library = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line);
+            if (!(library is string)) { ExceptionManager.InvalidParameterType(line, library.GetType().Name, 0, "String"); }
+
             switch (library)
             {
                 case "input":
@@ -131,15 +140,21 @@ namespace MyOwnLanguageNEW
             int commandLength = Utilities.GetParametersNumber(command.Skip(1).ToArray(), line);
             if (commandLength < 1) { ExceptionManager.SyntaxError(line, "goto <label_name>"); return line - 1; }
             if (commandLength > 1) { ExceptionManager.UnexpectedArgs(line); return line - 1; }
-            if (!Init.labels.ContainsKey(command[1])) { ExceptionManager.LabelNotFound(line, command[1]); return line - 1; }
-            return Init.labels[command[1]];
+            dynamic label = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line);
+            if (!(label is string)) { ExceptionManager.InvalidParameterType(line, label.GetType().Name, 0, "String"); return line - 1; }
+
+            if (!Init.labels.ContainsKey(label)) { ExceptionManager.LabelNotFound(line, command[1]); return line - 1; }
+            return Init.labels[label];
         }
 
         public static void Call(string[] command, int line, List<string[]> commands)
         {
             int commandLength = Utilities.GetParametersNumber(command.Skip(1).ToArray(), line);
             if (commandLength > 1) { ExceptionManager.SyntaxError(line, "call <func_name>"); return; }
-            if (Init.functions.ContainsKey(command[1])) { Init.ExecuteFunction(commands, Init.functions[command[1]]); }
+            dynamic func = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line);
+            if (!(func is string)) { ExceptionManager.InvalidParameterType(line, func.GetType().Name, 0, "String"); return; }
+
+            if (Init.functions.ContainsKey(func)) { Init.ExecuteFunction(commands, Init.functions[command[1]]); }
         }
     }
 }
