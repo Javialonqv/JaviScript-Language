@@ -99,7 +99,7 @@ namespace MyOwnLanguageNEW.Libraries
             int commandLength = Utilities.GetParametersNumber(command.Skip(1).ToArray(), line);
             if (commandLength < 1) { ExceptionManager.SyntaxError(line, "file.exists <file_path>"); return false; }
             if (commandLength > 1) { ExceptionManager.UnexpectedArgs(line); return false; }
-            dynamic filePath = Utilities.GetCommandParameter(command, 0, line);
+            dynamic filePath = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line);
             if (!(filePath is string)) { ExceptionManager.InvalidParameterType(line, filePath.GetType().Name, 0, "String"); return false; }
             return System.IO.File.Exists(filePath);
         }

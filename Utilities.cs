@@ -229,7 +229,7 @@ namespace MyOwnLanguageNEW
                     actualParameter.Clear();
                 }
             }
-            if (parameters.Count > 0) { parameters.Add(actualParameter.ToArray()); }
+            if (actualParameter.Count > 0) { parameters.Add(actualParameter.ToArray()); }
             // Si no hay ningun parametro hasta ahora entonces no hay divisiores "|":
             if (parameters.Count == 0)
             {
