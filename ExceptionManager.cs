@@ -87,6 +87,15 @@ namespace MyOwnLanguageNEW
         {
             ShowException(line, "Invalid Color Name", $"ERROR: The color name {name} is INVALID and doesn't exists.");
         }
+        public static void InvalidValueOnListCreation(int line, string value)
+        {
+            ShowException(line, "Invalid Value On List Creation", $"ERROR: The {value} value must end with a ',' character to create a list.");
+        }
+        public static void ListIndexIsOutsideOfBounds(int line, int index, int listCount)
+        {
+            ShowException(line, "List Index Is Outside Of Bounds.",
+                $"ERROR: The {index} index is outside of the bounds of the list, the max value is at {listCount - 1}.");
+        }
 
         static void ShowException(int line, string title, string message)
         {

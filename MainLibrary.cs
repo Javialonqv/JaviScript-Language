@@ -61,11 +61,11 @@ namespace MyOwnLanguageNEW
             dynamic varName = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line, false);
             if (!(varName is string)) { ExceptionManager.InvalidParameterType(line, varName.GetType().Name, 0, "String"); }
 
-            if (Init.runtimeVariables.Find(v => v.name == varName) == null) { ExceptionManager.UnknowType(line, varName); return; }
+            if (Utilities.VariableExists(varName)) { ExceptionManager.UnknowType(line, varName); return; }
             dynamic newValue = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 1, line);
             // newValue puede tener el valor que sea.
 
-            Init.runtimeVariables.Find(v => v.name == varName).value = newValue;
+            Utilities.FindVariableOfName(varName).value = newValue;
         }
 
         public static void Exit(string[] command, int line)

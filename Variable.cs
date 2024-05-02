@@ -22,5 +22,16 @@ namespace MyOwnLanguageNEW
         {
             return value.GetType().Name;
         }
+
+        public dynamic GetValueAtIndex(int line, int index)
+        {
+            if (value.GetType() == typeof(List<dynamic>))
+            {
+                List<dynamic> list = value;
+                if (index > list.Count - 1) { ExceptionManager.ListIndexIsOutsideOfBounds(line, index, list.Count); return null; }
+                return list[index];
+            }
+            else { return null; }
+        }
     }
 }

@@ -55,11 +55,8 @@ namespace MyOwnLanguageNEW
                 variable = Init.runtimeVariables.FirstOrDefault(v => v.name == all[0]);
                 if (variable != null)
                 {
-                    switch (all[1])
-                    {
-                        case "type":
-                            return variable.GetValueType();
-                    }
+                    if (all[1] == "type") { return variable.GetValueType(); }
+                    if (int.TryParse(all[1], out int index)) { return variable.GetValueAtIndex(line, index); }
                 }
             }
             if (variable != null && parseVar)
@@ -131,6 +128,22 @@ namespace MyOwnLanguageNEW
         {
             dynamic result = GetValue(line, values[0], parseVar);
             if (values.Length == 1) { return result; }
+
+            // Check if every value ends with a ',' to create a list.
+            if (values[0].EndsWith(","))
+            {
+                List<dynamic> list = new List<dynamic>();
+                for (int i = 0; i < values.Length; i++)
+                {
+                    // Remove the ',' from the value, except from the last one.
+                    string valueToAdd = i != values.Length - 1 ? values[i].Substring(0, values[i].Length - 1) : values[i];
+                    if (values[i].EndsWith(",") || i == values.Length - 1) { list.Add(GetValue(line, valueToAdd, parseVar)); }
+                    // This else only apply if the value isn't the last one.
+                    else if (i != values.Length - 1) { ExceptionManager.InvalidValueOnListCreation(line, values[i]); return null; }
+                }
+                result = list;
+                return result;
+            }
 
             for (int i = 1; i < values.Length; i += 2)
             {
@@ -229,7 +242,7 @@ namespace MyOwnLanguageNEW
                     actualParameter.Clear();
                 }
             }
-            if (actualParameter.Count > 0) { parameters.Add(actualParameter.ToArray()); }
+            if (parameters.Count > 0) { parameters.Add(actualParameter.ToArray()); }
             // Si no hay ningun parametro hasta ahora entonces no hay divisiores "|":
             if (parameters.Count == 0)
             {
