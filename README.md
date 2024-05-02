@@ -8,6 +8,8 @@ The commands and the parameters are separated by spaces, if one of the parameter
 
 The commands **INSIDE** other commands, such as `convert.to_string` within `print convert.to_string`, require parameters enclosed in parentheses. The complete command should look something like this: `print convert.to_string(myVar)`.
 
+You can define a list by writting a value and then separate it by a ','. For example: `var myVar | 1, 2, 3`. The lists are **NOT** supported by the `reassign` command yet.
+
 ## Main Library
 The Main commands are the following ones: **[]** Indicates a parameter is optional.\
 `var <name> <value>` Declares a new variable that can be used during the runtime.\
