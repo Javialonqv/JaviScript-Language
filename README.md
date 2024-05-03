@@ -6,6 +6,8 @@ Each line of the code file represents a different command to execute.
 
 The commands and the parameters are separated by spaces, if one of the parameters contains spaces (like arithmetic operations), you must use the **"|"** character to separate them.
 
+Use `#` at the start of a line to define a new **comment**.
+
 The commands **INSIDE** other commands, such as `convert.to_string` within `print convert.to_string`, require parameters enclosed in parentheses. The complete command should look something like this: `print convert.to_string(myVar)`.
 
 ## Main Library
