@@ -15,20 +15,35 @@ namespace JScript
         public static Dictionary<string, int> labels = new Dictionary<string, int>();
         public static Stack<bool> ifBlocks = new Stack<bool>();
         public static Dictionary<string, int> functions = new Dictionary<string, int>();
+        public static List<string[]> fileCommands = new List<string[]>();
         static bool inFunc = false;
 
         [STAThread]
         static void Main(string[] args)
         {
-            List<string[]> fileContents = new List<string[]>();
-
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Title = "Select your code file.";
-            if (dialog.ShowDialog() == DialogResult.OK)
+            activeLibraries.Add(new MainLibrary());
+            if (args.Length == 1)
             {
-                fileContents = new FileReader(dialog.FileName).lines;
-                FirstRead(fileContents);
-                ExecuteCommands(fileContents);
+                if (File.Exists(args[0]))
+                {
+                    List<string[]> fileContents = new List<string[]>();
+                    fileContents = new FileReader(args[0]).lines;
+                    FirstRead(fileContents);
+                    ExecuteCommands(fileContents);
+                }
+            }
+            if (args.Length == 0)
+            {
+                List<string[]> fileContents = new List<string[]>();
+
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Title = "Select your code file.";
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    fileContents = new FileReader(dialog.FileName).lines;
+                    FirstRead(fileContents);
+                    ExecuteCommands(fileContents);
+                }
             }
         }
 
@@ -65,6 +80,7 @@ namespace JScript
 
         static void ExecuteCommands(List<string[]> commands)
         {
+            fileCommands = commands;
             for (int i = 0; i < commands.Count; i++)
             {
                 string[] command = commands[i];
@@ -143,7 +159,7 @@ namespace JScript
             }
         }
 
-        public static void ExecuteFunction(List<string[]> commands, int startIndex)
+        public static dynamic ExecuteFunction(List<string[]> commands, int startIndex)
         {
             for (int i = startIndex; i < commands.Count; i++)
             {
@@ -201,8 +217,10 @@ namespace JScript
                         case "If":
                             MainLibrary.If(command, line);
                             break;
+                        case "return":
+                            return MainLibrary.Return(command, line);
                         case "EndFunc":
-                            return;
+                            return null;
                         default:
                             if (command[0] == "EndIf" || command[0].StartsWith("#")) { break; }
                             if (command[0].StartsWith("::"))
@@ -218,6 +236,7 @@ namespace JScript
                     }
                 }
             }
+            return null;
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JScript
 {
-    static class MainLibrary
+    class MainLibrary : Libraries.Library
     {
         public static void Var(string[] command, int line)
         {
@@ -150,14 +150,34 @@ namespace JScript
             return Init.labels[label];
         }
 
-        public static void Call(string[] command, int line, List<string[]> commands)
+        public static dynamic Call(string[] command, int line, List<string[]> commands)
         {
             int commandLength = Utilities.GetParametersNumber(command.Skip(1).ToArray(), line);
-            if (commandLength > 1) { ExceptionManager.SyntaxError(line, "call <func_name>"); return; }
+            if (commandLength > 1) { ExceptionManager.SyntaxError(line, "call <func_name>"); return null; }
             dynamic func = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line);
-            if (!(func is string)) { ExceptionManager.InvalidParameterType(line, func.GetType().Name, 0, "String"); return; }
+            if (!(func is string)) { ExceptionManager.InvalidParameterType(line, func.GetType().Name, 0, "String"); return null; }
 
-            if (Init.functions.ContainsKey(func)) { Init.ExecuteFunction(commands, Init.functions[command[1]]); }
+            if (Init.functions.ContainsKey(func)) { return Init.ExecuteFunction(commands, Init.functions[command[1]]); }
+            return null;
+        }
+
+        public static dynamic Return(string[] command, int line)
+        {
+            int commandLength = Utilities.GetParametersNumber(command.Skip(1).ToArray(), line);
+            if (commandLength > 1) { ExceptionManager.SyntaxError(line, "return <value>"); return null; }
+            if (commandLength < 1) { return null; }
+            dynamic value = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line);
+            return value;
+        }
+
+        public override dynamic ExecuteCommand(string[] command, int line)
+        {
+            switch (command[0])
+            {
+                case "call":
+                    return MainLibrary.Call(command, line, Init.fileCommands);
+            }
+            return null;
         }
     }
 }
