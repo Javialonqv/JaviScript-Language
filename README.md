@@ -43,7 +43,8 @@ Use `If <conditions>` in order to define an If block, than only will be executed
 
 To define where the If block ends write `EndIf` at the end of the block.
 ### FUNCTIONS
-Use `Func <name>` to define a new function block, and `EndFunc` to define where it ends. These blocks will ONLY be executed when called by the `call <func_name>` command.
+Use `Func <name>` to define a new function block, and `EndFunc` to define where it ends. These blocks will ONLY be executed when called by the `call <func_name>` command.\
+Use `return [<value>]` function to stop the function code execution and return the specified value to the `call` command.
 
 **TODO:** Add parameters for the functions.
 
@@ -71,6 +72,9 @@ The commands of the **Convert** library are the following ones:\
 `convert.to_int <value>` Converts the specified value into a int value.\
 `convert.to_float <value>` Converts the specified value into a float value.\
 `convert.to_bool <value>` Converts the specified value into a bool value.\
+`convert.try_to_int <value>` Return true if the specified value can be parsed to int.\
+`convert.try_to_float <value>` Return true if the specified value can be parsed to float.\
+`convert.try_to_bool <value>` Return true if the specified value can be parsed to bool.\
 These commands can be used with other ones, such as `print convert.to_string(test)`.
 
 ## File Library
