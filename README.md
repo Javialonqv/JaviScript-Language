@@ -10,6 +10,8 @@ Use `#` at the start of a line to define a new **comment**.
 
 The commands **INSIDE** other commands, such as `convert.to_string` within `print convert.to_string`, require parameters enclosed in parentheses. The complete command should look something like this: `print convert.to_string(myVar)`.
 
+If you don't want the code file picker to open every time you open the interpreter, you can provide the file path as a parameter when starting it.
+
 ## Main Library
 The Main commands are the following ones: **[]** Indicates a parameter is optional.\
 `var <name> <value>` Declares a new variable that can be used during the runtime.\
