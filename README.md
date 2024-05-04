@@ -1,4 +1,4 @@
-# MY OWN LANGUAGE
+# JAVISCRIPT (MY OWN LANGUAGE)
 
 **The Source Code it's a dissaster, good luck trying to figure out how it works :)**
 ## Syntaxis
@@ -31,6 +31,7 @@ Use `var <name> <value>` to create a new variable that can be used during runtim
 There are some values that can be accesed with a variable, such as `type` or to access to a value when you create a list. For example, `myVar.type` or `myList.0`.
 ### LISTS
 You can define a list by writting a value and then separate it by a ','. For example: `var myVar | 1, 2, 3`. The lists are **NOT** supported by the `reassign` command yet.
+The subcommand to access to they values is `myList.<value_index>`, for example `myList.2`.
 ### IMPORT COMMAND
 Use `import <library>` to import a library into the app's execution in order to use functions from the specified library. If you don't import them, you won't be able to use their functions.
 ### LABELS
@@ -105,3 +106,11 @@ The commands of the **Math** library are the following ones:\
 `math.sqrt <value>` Returns the square root of the specified value.\
 `math.random <min_value> <max_value>` Returns a random float between the min value and a max value.\
 `math.random_int <min_value> <max_value>` Returns a random int between the min value and a max value.
+
+## Window Library
+Remember to use `import window` in order to use these commands.
+
+The commands of the **Window** library are the following ones:\
+`window.file_dialog <title>` Open a file picker window and save the variable.
+### FILE DIALOG COMMAND
+Use `window.file_dialog` command and it will open a file picker window and save the variable, the subcommands you can access with this variable are `path` and `name` to get the path and name of the selected file.
