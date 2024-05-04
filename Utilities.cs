@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MyOwnLanguageNEW
 {
@@ -47,24 +48,8 @@ namespace MyOwnLanguageNEW
                 return bool.Parse(strText);
             }
 
-            // Si no, buscar el valor de una variable con dicho nombre si es que existe:
-            Variable variable = Init.runtimeVariables.FirstOrDefault(v => v.name == strText);
-            if (variable == null && parseVar)
-            {
-                string[] all = strText.Split('.');
-                variable = Init.runtimeVariables.FirstOrDefault(v => v.name == all[0]);
-                if (variable != null)
-                {
-                    if (all[1] == "type") { return variable.GetValueType(); }
-                    if (int.TryParse(all[1], out int index)) { return variable.GetValueAtIndex(line, index); }
-                }
-            }
-            if (variable != null && parseVar)
-            {
-                return variable.value;
-            }
-
             // Si no, buscar si es un comando aparte
+            dynamic tempValue = null;
             foreach (Libraries.Library library in Init.activeLibraries)
             {
                 int firstParentesis = strText.IndexOf('(');
@@ -75,18 +60,63 @@ namespace MyOwnLanguageNEW
                     commandToExecute.Clear();
                     commandToExecute.Add(strText.Substring(0, firstParentesis));
                     string parameters = strText.Substring(firstParentesis + 1, secondParentesis - firstParentesis - 1);
-                    commandToExecute.AddRange(parameters.Split(' '));
+                    commandToExecute.AddRange(GetCommandParameters(SplitCommand(parameters), line));
                 }
                 dynamic value = library.ExecuteCommand(commandToExecute.ToArray(), line);
                 if (value != null)
                 {
-                    return value;
+                    if (secondParentesis < strText.Length - 1) // Significa que hay mas texto a partir del ultimo parentesis:
+                    {
+                        tempValue = value;
+                        strText = strText.Remove(0, secondParentesis + 1);
+                    }
+                    else { return value; }
                 }
+            }
+
+            // Si no, buscar el valor de una variable con dicho nombre si es que existe:
+            Variable variable = Init.runtimeVariables.FirstOrDefault(v => v.name == strText);
+            if (variable != null && parseVar)
+            {
+                return variable.value;
+            }
+            if (variable == null && parseVar)
+            {
+                string[] all = strText.Split('.');
+                variable = Init.runtimeVariables.FirstOrDefault(v => v.name == all[0]);
+                dynamic actualValue = variable;
+                if (tempValue != null) { actualValue = tempValue; }
+                if (actualValue != null)
+                {
+                    foreach (string s in all.Skip(1))
+                    {
+                        ExecuteAdditionalInstruction(line, actualValue, s);
+                    }
+                }
+                /*if (variable != null)
+                {
+                    if (all[1] == "type") { return variable.GetValueType(); }
+                    if (int.TryParse(all[1], out int index)) { return variable.GetValueAtIndex(line, index); }
+                }*/
+                if (actualValue != null) { return actualValue; }
             }
 
             // Si no, lanzar un error y devolver null:
             //ExceptionManager.UnknowType(line, strText);
             return strText;
+        }
+
+        static void ExecuteAdditionalInstruction(int line, dynamic actualValue, string command)
+        {
+            if (command == "type")
+            {
+                if (actualValue is Variable) { actualValue = (Variable)actualValue.GetValueType(); }
+                else { actualValue = actualValue.GetType().Name; }
+            }
+            if (int.TryParse(command, out int index) && actualValue is Variable) { actualValue = ((Variable)actualValue).GetValueAtIndex(line, index); }
+            if (command == "title" && actualValue is OpenFileDialog) { actualValue = ((OpenFileDialog)actualValue).Title; }
+            if (command == "path" && actualValue is OpenFileDialog) { actualValue = ((OpenFileDialog)actualValue).FileName; }
+            if (command == "name" && actualValue is OpenFileDialog) { actualValue = ((OpenFileDialog)actualValue).SafeFileName; }
         }
 
         public static bool EvaluateIfConditions(int line, string[] command)
@@ -266,6 +296,74 @@ namespace MyOwnLanguageNEW
 
             dynamic result = ConcatenateValues(parameters[parameter], line, parseVar);
             return result;
+        }
+
+        public static List<string> GetCommandParameters(string[] command, int line, bool parseVar = true)
+        {
+            List<string[]> parameters = new List<string[]>();
+            List<string> actualParameter = new List<string>();
+
+            for (int i = 0; i < command.Length; i++)
+            {
+                if (command[i] != "|")
+                {
+                    actualParameter.Add(command[i]);
+                }
+                else
+                {
+                    parameters.Add(actualParameter.ToArray());
+                    actualParameter.Clear();
+                }
+            }
+            if (parameters.Count > 0) { parameters.Add(actualParameter.ToArray()); }
+            // Si no hay ningun parametro hasta ahora entonces no hay divisiores "|":
+            if (parameters.Count == 0)
+            {
+                bool modify = false;
+                foreach (string s in command) { parameters.Add(new string[] { s }); }
+                foreach (string[] array in parameters)
+                {
+                    if (array[0] == "+" || array[0] == "-" || array[0] == "/" || array[0] == "*" || array[0] == "==" || array[0] == "!=")
+                    {
+                        modify = true;
+                    }
+                }
+                if (modify)
+                {
+                    List<string> temp = new List<string>();
+                    foreach (string[] parm in parameters) { temp.Add(parm[0]); }
+                    parameters.Clear();
+                    parameters.Add(temp.ToArray());
+                }
+            }
+
+            List<string> toReturn = new List<string>();
+            foreach (string[] s in parameters)
+            {
+                toReturn.Add(ConcatenateValues(s, line, parseVar));
+            }
+            //dynamic result = ConcatenateValues(parameters[0], line, parseVar);
+            return toReturn;
+        }
+
+        public static string[] SplitCommand(string command)
+        {
+            string[] splited = null;
+            var chars = command.ToCharArray();
+            bool isQuote = false;
+            bool isParenthesis = false;
+
+            for (int i = 0; i < chars.Length; i++)
+            {
+                if (chars[i] == '"')
+                {
+                    isQuote = !isQuote;
+                }
+                if (chars[i] == '(' || chars[i] == ')') { isParenthesis = !isParenthesis; }
+                if (chars[i] == ' ' && !isQuote && !isParenthesis) { chars[i] = '\0'; }
+            }
+            splited = new string(chars).Split(new char[] { '\0' }, StringSplitOptions.RemoveEmptyEntries);
+            return splited;
         }
 
         public static bool VariableExists(string varName)

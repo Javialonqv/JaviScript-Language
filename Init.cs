@@ -162,13 +162,13 @@ namespace MyOwnLanguageNEW
                 }
                 int line = i + 1;
                 // En caso de que la instrucción en realidad esté en una libreria PREVIAMENTE CARGADA:
-                bool executedByLibrary = false;
+                dynamic executedByLibrary = false;
                 foreach (Libraries.Library library in Init.activeLibraries)
                 {
                     // Si es true entonces la instruccion se ejecuto correctamente:
-                    if (!executedByLibrary) { executedByLibrary = library.ExecuteCommand(command, line); }
+                    if (executedByLibrary == null) { executedByLibrary = library.ExecuteCommand(command, line); }
                 }
-                if (!executedByLibrary)
+                if (executedByLibrary != null)
                 {
                     switch (command[0])
                     {

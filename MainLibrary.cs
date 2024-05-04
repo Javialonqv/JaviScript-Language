@@ -61,7 +61,7 @@ namespace MyOwnLanguageNEW
             dynamic varName = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line, false);
             if (!(varName is string)) { ExceptionManager.InvalidParameterType(line, varName.GetType().Name, 0, "String"); }
 
-            if (Utilities.VariableExists(varName)) { ExceptionManager.UnknowType(line, varName); return; }
+            if (!Utilities.VariableExists(varName)) { ExceptionManager.UnknowType(line, varName); return; }
             dynamic newValue = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 1, line);
             // newValue puede tener el valor que sea.
 
@@ -113,6 +113,9 @@ namespace MyOwnLanguageNEW
                     break;
                 case "file":
                     Init.activeLibraries.Add(new Libraries.File());
+                    break;
+                case "window":
+                    Init.activeLibraries.Add(new Libraries.Window());
                     break;
                 default:
                     ExceptionManager.LibraryNotFound(line, library);

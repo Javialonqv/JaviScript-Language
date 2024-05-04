@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace MyOwnLanguageNEW
 {
@@ -99,8 +100,23 @@ namespace MyOwnLanguageNEW
 
         static void ShowException(int line, string title, string message)
         {
-            try { throw new Exception(); }
-            catch (Exception e) { MessageBox.Show(message + e.StackTrace, title, MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            MessageBox.Show(message + GetStackTrace(message), title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        static string GetStackTrace(string message)
+        {
+            StringBuilder sb = new StringBuilder();
+            StackTrace stackTrace = new StackTrace();
+            for (int i = stackTrace.FrameCount - 1; i >= 0; i--)
+            {
+                StackFrame frame = stackTrace.GetFrame(i);
+                var method = frame.GetMethod();
+                if (method != null)
+                {
+                    sb.AppendLine(method.DeclaringType.FullName + "." + method.Name);
+                }
+            }
+            return sb.ToString();
         }
     }
 }
