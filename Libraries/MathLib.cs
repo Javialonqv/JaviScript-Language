@@ -4,17 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyOwnLanguageNEW.Libraries
+namespace JScript.Libraries
 {
-    class Math : Library
+    class MathLib : Library
     {
-        public static Math math = null;
-
-        public Math()
-        {
-            math = this;
-        }
-
         public override dynamic ExecuteCommand(string[] command, int line)
         {
             switch (command[0])
@@ -37,7 +30,7 @@ namespace MyOwnLanguageNEW.Libraries
             dynamic value = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line);
             if (value is int || value is float)
             {
-                return System.Math.Sqrt(value);
+                return Math.Sqrt(value);
             }
             else
             {

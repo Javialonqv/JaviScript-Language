@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyOwnLanguageNEW.Libraries
+namespace JScript.Libraries
 {
-    class Convert : Library
+    class ConvertLib : Library
     {
         public override dynamic ExecuteCommand(string[] command, int line)
         {
@@ -43,7 +43,7 @@ namespace MyOwnLanguageNEW.Libraries
             dynamic value = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line, false).ToString();
             try
             {
-                return System.Convert.ToInt32(Utilities.GetValue(line, value));
+                return Convert.ToInt32(Utilities.GetValue(line, value));
             }
             catch { ExceptionManager.ConversionNotAllowed(line, Utilities.GetValue(line, value).GetType().Name, "int"); return 0; }
         }
@@ -56,7 +56,7 @@ namespace MyOwnLanguageNEW.Libraries
             dynamic value = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line, false).ToString();
             try
             {
-                return System.Convert.ToSingle(Utilities.GetValue(line, value));
+                return Convert.ToSingle(Utilities.GetValue(line, value));
             }
             catch { ExceptionManager.ConversionNotAllowed(line, Utilities.GetValue(line, value).GetType().Name, "float"); return 0; }
         }
@@ -69,7 +69,7 @@ namespace MyOwnLanguageNEW.Libraries
             dynamic value = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line, false).ToString();
             try
             {
-                return System.Convert.ToBoolean(Utilities.GetValue(line, value));
+                return Convert.ToBoolean(Utilities.GetValue(line, value));
             }
             catch { ExceptionManager.ConversionNotAllowed(line, Utilities.GetValue(line, value).GetType().Name, "bool"); return false; }
         }

@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace MyOwnLanguageNEW.Libraries
+namespace JScript.Libraries
 {
-    class File : Library
+    class FileLib : Library
     {
         public override dynamic ExecuteCommand(string[] command, int line)
         {
@@ -49,8 +49,8 @@ namespace MyOwnLanguageNEW.Libraries
                 return;
             }
 
-            if (!System.IO.File.Exists(filePath) && !overwrite) { ExceptionManager.FileAlreadyExists(line, filePath); return; }
-            System.IO.File.Create(filePath, 1);
+            if (!File.Exists(filePath) && !overwrite) { ExceptionManager.FileAlreadyExists(line, filePath); return; }
+            File.Create(filePath, 1);
         }
         public void Copy(string[] command, int line)
         {
@@ -71,11 +71,11 @@ namespace MyOwnLanguageNEW.Libraries
                 return;
             }
 
-            if (!System.IO.File.Exists(originFilePath)) { ExceptionManager.FileDoesntExists(line, originFilePath); return; }
-            if (!System.IO.Directory.Exists(dirPath)) { ExceptionManager.DirDoesntExists(line, dirPath); return; }
-            if (System.IO.File.Exists(destFilePath) && !overwrite) { ExceptionManager.FileAlreadyExists(line, destFilePath); return; }
+            if (!File.Exists(originFilePath)) { ExceptionManager.FileDoesntExists(line, originFilePath); return; }
+            if (!Directory.Exists(dirPath)) { ExceptionManager.DirDoesntExists(line, dirPath); return; }
+            if (File.Exists(destFilePath) && !overwrite) { ExceptionManager.FileAlreadyExists(line, destFilePath); return; }
 
-            System.IO.File.Copy(originFilePath, destFilePath, overwrite);
+            File.Copy(originFilePath, destFilePath, overwrite);
         }
         public void Move(string[] command, int line)
         {
@@ -89,10 +89,10 @@ namespace MyOwnLanguageNEW.Libraries
             if (!(destFilePath is string)) { ExceptionManager.InvalidParameterType(line, destFilePath.GetType().Name, 1, "String"); return; }
             string dirPath = System.IO.Path.GetDirectoryName(destFilePath);
 
-            if (!System.IO.File.Exists(originFilePath)) { ExceptionManager.FileDoesntExists(line, originFilePath); return; }
-            if (!System.IO.Directory.Exists(dirPath)) { ExceptionManager.DirDoesntExists(line, dirPath); return; }
+            if (!File.Exists(originFilePath)) { ExceptionManager.FileDoesntExists(line, originFilePath); return; }
+            if (!Directory.Exists(dirPath)) { ExceptionManager.DirDoesntExists(line, dirPath); return; }
 
-            System.IO.File.Move(originFilePath, destFilePath);
+            File.Move(originFilePath, destFilePath);
         }
         public bool Exists(string[] command, int line)
         {
@@ -101,7 +101,7 @@ namespace MyOwnLanguageNEW.Libraries
             if (commandLength > 1) { ExceptionManager.UnexpectedArgs(line); return false; }
             dynamic filePath = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line);
             if (!(filePath is string)) { ExceptionManager.InvalidParameterType(line, filePath.GetType().Name, 0, "String"); return false; }
-            return System.IO.File.Exists(filePath);
+            return File.Exists(filePath);
         }
         public string ReadLine(string[] command, int line)
         {
@@ -114,8 +114,8 @@ namespace MyOwnLanguageNEW.Libraries
             dynamic fileLine = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 1, line);
             if (!(fileLine is int)) { ExceptionManager.InvalidParameterType(line, fileLine.GetType().Name, 1, "Int"); return ""; }
 
-            if (!System.IO.File.Exists(filePath)) { ExceptionManager.FileDoesntExists(line, filePath); return ""; }
-            string[] fileLines = System.IO.File.ReadAllLines(filePath);
+            if (!File.Exists(filePath)) { ExceptionManager.FileDoesntExists(line, filePath); return ""; }
+            string[] fileLines = File.ReadAllLines(filePath);
             if (fileLine > fileLines.Length - 1) { return ""; }
             return fileLines[fileLine];
         }
@@ -132,11 +132,11 @@ namespace MyOwnLanguageNEW.Libraries
             dynamic newValue = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 2, line);
             if (!(newValue is string)) { ExceptionManager.InvalidParameterType(line, newValue.GetType().Name, 2, "String"); return; }
 
-            if (!System.IO.File.Exists(filePath)) { ExceptionManager.FileDoesntExists(line, filePath); return; }
+            if (!File.Exists(filePath)) { ExceptionManager.FileDoesntExists(line, filePath); return; }
             string[] fileLines = System.IO.File.ReadAllLines(filePath);
             if (fileLine > fileLines.Length - 1) { return; }
             fileLines[fileLine] = newValue;
-            System.IO.File.WriteAllLines(filePath, fileLines);
+            File.WriteAllLines(filePath, fileLines);
             return;
         }
     }

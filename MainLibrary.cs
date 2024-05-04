@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyOwnLanguageNEW
+namespace JScript
 {
     static class MainLibrary
     {
@@ -100,22 +100,22 @@ namespace MyOwnLanguageNEW
             switch (library)
             {
                 case "input":
-                    Init.activeLibraries.Add(new Libraries.Input());
+                    Init.activeLibraries.Add(new Libraries.InputLib());
                     break;
                 case "math":
-                    Init.activeLibraries.Add(new Libraries.Math());
+                    Init.activeLibraries.Add(new Libraries.MathLib());
                     break;
                 case "console":
-                    Init.activeLibraries.Add(new Libraries.Console());
+                    Init.activeLibraries.Add(new Libraries.ConsoleLib());
                     break;
                 case "convert":
-                    Init.activeLibraries.Add(new Libraries.Convert());
+                    Init.activeLibraries.Add(new Libraries.ConvertLib());
                     break;
                 case "file":
-                    Init.activeLibraries.Add(new Libraries.File());
+                    Init.activeLibraries.Add(new Libraries.FileLib());
                     break;
                 case "window":
-                    Init.activeLibraries.Add(new Libraries.Window());
+                    Init.activeLibraries.Add(new Libraries.WindowLib());
                     break;
                 default:
                     ExceptionManager.LibraryNotFound(line, library);

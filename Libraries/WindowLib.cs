@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MyOwnLanguageNEW.Libraries
+namespace JScript.Libraries
 {
-    class Window : Library
+    class WindowLib : Library
     {
         public override dynamic ExecuteCommand(string[] command, int line)
         {

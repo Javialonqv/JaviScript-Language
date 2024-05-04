@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyOwnLanguageNEW.Libraries
+namespace JScript.Libraries
 {
-    class Console : Library
+    class ConsoleLib : Library
     {
         public override dynamic ExecuteCommand(string[] command, int line)
         {
@@ -30,7 +30,7 @@ namespace MyOwnLanguageNEW.Libraries
             int commandLength = Utilities.GetParametersNumber(command.Skip(1).ToArray(), line);
             if (commandLength > 0) { ExceptionManager.UnexpectedArgs(line); }
 
-            System.Console.Clear();
+            Console.Clear();
         }
         public string ForeColor(string[] command, int line)
         {
@@ -44,14 +44,14 @@ namespace MyOwnLanguageNEW.Libraries
 
                 if (Enum.TryParse(color, true, out ConsoleColor consoleColor))
                 {
-                    System.Console.ForegroundColor = consoleColor;
+                    Console.ForegroundColor = consoleColor;
                 }
                 else
                 {
                     ExceptionManager.InvalidColorName(line, color);
                 }
             }
-            return System.Console.ForegroundColor.ToString();
+            return Console.ForegroundColor.ToString();
         }
         public string BackColor(string[] command, int line)
         {
@@ -65,14 +65,14 @@ namespace MyOwnLanguageNEW.Libraries
 
                 if (Enum.TryParse(color, true, out ConsoleColor consoleColor))
                 {
-                    System.Console.BackgroundColor = consoleColor;
+                    Console.BackgroundColor = consoleColor;
                 }
                 else
                 {
                     ExceptionManager.InvalidColorName(line, color);
                 }
             }
-            return System.Console.BackgroundColor.ToString();
+            return Console.BackgroundColor.ToString();
         }
         public string Title(string[] command, int line)
         {
@@ -84,9 +84,9 @@ namespace MyOwnLanguageNEW.Libraries
                 string title = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line);
                 if (!(title is string)) { ExceptionManager.InvalidParameterType(line, title.GetType().Name, 0, "String"); }
 
-                System.Console.Title = title;
+                Console.Title = title;
             }
-            return System.Console.Title;
+            return Console.Title;
         }
     }
 }

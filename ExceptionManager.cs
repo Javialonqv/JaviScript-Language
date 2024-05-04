@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 
-namespace MyOwnLanguageNEW
+namespace JScript
 {
     static class ExceptionManager
     {

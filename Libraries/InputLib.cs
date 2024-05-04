@@ -4,17 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyOwnLanguageNEW.Libraries
+namespace JScript.Libraries
 {
-    class Input : Library
+    class InputLib : Library
     {
-        public static Input input = null;
-
-        public Input()
-        {
-            input = this;
-        }
-
         public override dynamic ExecuteCommand(string[] command, int line)
         {
             switch (command[0])
@@ -36,14 +29,14 @@ namespace MyOwnLanguageNEW.Libraries
             int commandLength = Utilities.GetParametersNumber(command.Skip(1).ToArray(), line);
             if (commandLength > 0) { ExceptionManager.UnexpectedArgs(line); }
 
-            return System.Console.ReadLine();
+            return Console.ReadLine();
         }
         public dynamic UserInputInt(string[] command, int line)
         {
             int commandLength = Utilities.GetParametersNumber(command.Skip(1).ToArray(), line);
             if (commandLength > 0) { ExceptionManager.UnexpectedArgs(line); }
 
-            string input = System.Console.ReadLine();
+            string input = Console.ReadLine();
             if (int.TryParse(input, out int result))
             {
                 return result;
@@ -59,7 +52,7 @@ namespace MyOwnLanguageNEW.Libraries
             int commandLength = Utilities.GetParametersNumber(command.Skip(1).ToArray(), line);
             if (commandLength > 0) { ExceptionManager.UnexpectedArgs(line); }
 
-            string input = System.Console.ReadLine();
+            string input = Console.ReadLine();
             if (float.TryParse(input, out float result))
             {
                 return result;
@@ -76,7 +69,7 @@ namespace MyOwnLanguageNEW.Libraries
             int commandLength = Utilities.GetParametersNumber(command.Skip(1).ToArray(), line);
             if (commandLength > 0) { ExceptionManager.UnexpectedArgs(line); }
 
-            return System.Console.ReadKey();
+            return Console.ReadKey();
         }
     }
 }

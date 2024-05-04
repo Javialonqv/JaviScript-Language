@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
-namespace MyOwnLanguageNEW
+namespace JScript
 {
     static class Init
     {

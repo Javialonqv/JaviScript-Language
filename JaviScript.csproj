@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CFF579CE-3491-40F4-B98A-126AE668C9BD}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>MyOwnLanguageNEW</RootNamespace>
-    <AssemblyName>MyOwnLanguageNEW</AssemblyName>
+    <RootNamespace>JScript</RootNamespace>
+    <AssemblyName>JaviScript</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -47,13 +47,13 @@
     <Compile Include="ExceptionManager.cs" />
     <Compile Include="FileReader.cs" />
     <Compile Include="Init.cs" />
-    <Compile Include="Libraries\Convert.cs" />
-    <Compile Include="Libraries\File.cs" />
-    <Compile Include="Libraries\Input.cs" />
+    <Compile Include="Libraries\ConvertLib.cs" />
+    <Compile Include="Libraries\FileLib.cs" />
+    <Compile Include="Libraries\InputLib.cs" />
     <Compile Include="Libraries\Library.cs" />
-    <Compile Include="Libraries\Console.cs" />
-    <Compile Include="Libraries\Math.cs" />
-    <Compile Include="Libraries\Window.cs" />
+    <Compile Include="Libraries\ConsoleLib.cs" />
+    <Compile Include="Libraries\MathLib.cs" />
+    <Compile Include="Libraries\WindowLib.cs" />
     <Compile Include="MainLibrary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities.cs" />
