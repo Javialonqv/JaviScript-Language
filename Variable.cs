@@ -12,34 +12,15 @@ namespace MyOwnLanguageNEW
         public string name { get; set; }
         public dynamic value { get; set; }
 
-        public Dictionary<string, dynamic> subValues = new Dictionary<string, dynamic>();
-
         /*public Variable(string name, dynamic value)
         {
             this.name = name;
             this.value = value;
         }*/
-        public Variable(string name, dynamic value, Type valueType)
+        public Variable(string name, dynamic value)
         {
             this.name = name;
             this.value = value;
-            subValues.Add("type", value.GetType().Name);
-            switch (valueType)
-            {
-                case Type type when type == typeof(List<dynamic>):
-                    List<dynamic> list = (List<dynamic>)value;
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        subValues.Add(i.ToString(), list[i]);
-                    }
-                    break;
-                case Type type when type == typeof(OpenFileDialog):
-                    OpenFileDialog dialog = (OpenFileDialog)value;
-                    subValues.Add("title", dialog.Title);
-                    subValues.Add("path", dialog.FileName);
-                    subValues.Add("name", dialog.SafeFileName);
-                    break;
-            }
         }
 
         public string GetValueType()

@@ -28,7 +28,6 @@ namespace MyOwnLanguageNEW.Libraries
             string title = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line);
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Title = title;
-            dialog.ShowDialog();
             return dialog;
         }
     }
