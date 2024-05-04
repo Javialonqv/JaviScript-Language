@@ -108,16 +108,9 @@ namespace MyOwnLanguageNEW
 
         static void ExecuteAdditionalInstruction(int line, ref dynamic actualValue, string command)
         {
-            if (command == "type")
-            {
-                if (actualValue is Variable)
-                {
-                    try { actualValue = ((Variable)actualValue).GetValueType(); }
-                    catch { ExceptionManager.SubValueNOTFound(line, command, actualValue.GetType().Name); }
-                }
-                else { actualValue = actualValue.GetType().Name; }
-                return;
-            }
+            if (actualValue is Variable) { actualValue = ((Variable)actualValue).value; }
+
+            if (command == "type") { actualValue = actualValue.GetType().Name; return; }
             if (int.TryParse(command, out int index) && actualValue is Variable) { actualValue = ((Variable)actualValue).GetValueAtIndex(line, index); return; }
             if (command == "show" && actualValue is OpenFileDialog) { ((OpenFileDialog)actualValue).ShowDialog(); return; }
             if (command == "title" && actualValue is OpenFileDialog) { actualValue = ((OpenFileDialog)actualValue).Title; return; }

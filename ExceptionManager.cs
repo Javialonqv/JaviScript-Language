@@ -111,13 +111,21 @@ namespace MyOwnLanguageNEW
         {
             StringBuilder sb = new StringBuilder();
             StackTrace stackTrace = new StackTrace();
-            for (int i = stackTrace.FrameCount - 1; i >= 0; i--)
+            sb.AppendLine();
+            for (int i = stackTrace.FrameCount - 1; i >= 5; i--)
             {
                 StackFrame frame = stackTrace.GetFrame(i);
                 var method = frame.GetMethod();
                 if (method != null)
                 {
-                    sb.AppendLine(method.DeclaringType.FullName + "." + method.Name);
+                    if (!method.IsStatic)
+                    {
+                        sb.AppendLine(method.DeclaringType.FullName + "." + method.Name);
+                    }
+                    else
+                    {
+                        sb.AppendLine("static." + method.Name);
+                    }
                 }
             }
             return sb.ToString();
