@@ -6,9 +6,9 @@ Each line of the code file represents a different command to execute.
 
 The commands and the parameters are separated by spaces, if one of the parameters contains spaces (like arithmetic operations), you must use the **"|"** character to separate them.
 
-The commands **INSIDE** other commands, such as `convert.to_string` within `print convert.to_string`, require parameters enclosed in parentheses. The complete command should look something like this: `print convert.to_string(myVar)`.
+Use `#` at the start of a line to define a new **comment**.
 
-You can define a list by writting a value and then separate it by a ','. For example: `var myVar | 1, 2, 3`. The lists are **NOT** supported by the `reassign` command yet.
+The commands **INSIDE** other commands, such as `convert.to_string` within `print convert.to_string`, require parameters enclosed in parentheses. The complete command should look something like this: `print convert.to_string(myVar)`.
 
 ## Main Library
 The Main commands are the following ones: **[]** Indicates a parameter is optional.\
@@ -26,6 +26,11 @@ The Main commands are the following ones: **[]** Indicates a parameter is option
 `Func <func_name>` Defines a code block that only can be executed with the "call" instruction.\
 `EndFunc` Defines where the "Func" code block ends.\
 `call` Calls a Func block if it exists.
+### VARIABLES
+Use `var <name> <value>` to create a new variable that can be used during runtime. To change the value, use the `reassign` command.\
+There are some values that can be accesed with a variable, such as `type` or to access to a value when you create a list. For example, `myVar.type` or `myList.0`.
+### LISTS
+You can define a list by writting a value and then separate it by a ','. For example: `var myVar | 1, 2, 3`. The lists are **NOT** supported by the `reassign` command yet.
 ### IMPORT COMMAND
 Use `import <library>` to import a library into the app's execution in order to use functions from the specified library. If you don't import them, you won't be able to use their functions.
 ### LABELS
