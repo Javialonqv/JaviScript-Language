@@ -20,6 +20,12 @@ namespace JScript.Libraries
                     return ConvertToFloat(command, line);
                 case "convert.to_bool":
                     return ConvertToBool(command, line);
+                case "convert.try_to_int":
+                    return TryConvertToInt(command, line);
+                case "convert.try_to_float":
+                    return TryConvertToFloat(command, line);
+                case "convert.try_to_bool":
+                    return TryConvertToBool(command, line);
             }
             return null;
         }
@@ -74,21 +80,47 @@ namespace JScript.Libraries
             catch { ExceptionManager.ConversionNotAllowed(line, Utilities.GetValue(line, value).GetType().Name, "bool"); return false; }
         }
 
-        /*public bool TryConvertToString(string[] command, int line)
+        public bool TryConvertToInt(string[] command, int line)
         {
             int commandLength = Utilities.GetParametersNumber(command.Skip(1).ToArray(), line);
-            if (commandLength < 1) { ExceptionManager.SyntaxError(line, "convert.try_to_string <var_name>"); }
+            if (commandLength < 1) { ExceptionManager.SyntaxError(line, "convert.to_int <var_name>"); }
             if (commandLength > 1) { ExceptionManager.UnexpectedArgs(line); }
 
-            string varName = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line, false);
-            if (!Utilities.VariableExists(varName)) { ExceptionManager.UnknowType(line, varName); return; }
-            Variable var = Utilities.FindVariableOfName(varName);
+            dynamic value = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line, false).ToString();
             try
             {
-                System.Convert.ToString(var.value);
+                Convert.ToInt32(Utilities.GetValue(line, value));
+                return true;
             }
             catch { return false; }
-            return true;
-        }*/
+        }
+        public bool TryConvertToFloat(string[] command, int line)
+        {
+            int commandLength = Utilities.GetParametersNumber(command.Skip(1).ToArray(), line);
+            if (commandLength < 1) { ExceptionManager.SyntaxError(line, "convert.to_float <var_name>"); }
+            if (commandLength > 1) { ExceptionManager.UnexpectedArgs(line); }
+
+            dynamic value = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line, false).ToString();
+            try
+            {
+                Convert.ToSingle(Utilities.GetValue(line, value));
+                return true;
+            }
+            catch { return false; }
+        }
+        public bool TryConvertToBool(string[] command, int line)
+        {
+            int commandLength = Utilities.GetParametersNumber(command.Skip(1).ToArray(), line);
+            if (commandLength < 1) { ExceptionManager.SyntaxError(line, "convert.to_bool <var_name>"); }
+            if (commandLength > 1) { ExceptionManager.UnexpectedArgs(line); }
+
+            dynamic value = Utilities.GetCommandParameter(command.Skip(1).ToArray(), 0, line, false).ToString();
+            try
+            {
+                Convert.ToBoolean(Utilities.GetValue(line, value));
+                return true;
+            }
+            catch { return false; }
+        }
     }
 }
