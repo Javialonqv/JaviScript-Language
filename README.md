@@ -32,7 +32,8 @@ There are some values that can be accesed with a variable, the universal one tha
 - `type` to get the type of the variable.
 ### LISTS
 You can define a list by writting a value and then separate it by a ','. For example: `var myVar | 1, 2, 3`. The lists are **NOT** supported by the `reassign` command yet.
-The subcommand to access to they values is `myList.<value_index>`, for example `myList.2`.
+The subcommand to access to they subvalues is:
+- `myList.<value_index>`, for example `myList.2`.
 ### IMPORT COMMAND
 Use `import <library>` to import a library into the app's execution in order to use functions from the specified library. If you don't import them, you won't be able to use their functions.
 ### LABELS
@@ -114,7 +115,7 @@ Remember to use `import window` in order to use these commands.
 The commands of the **Window** library are the following ones:\
 `window.file_dialog <title>` Open a file picker window and save the variable.
 ### FILE DIALOG COMMAND
-Use `window.file_dialog` command and it will open a file picker window and save the variable, the subcommands you can access with this variable are:\
+Use `window.file_dialog` command and it will open a file picker window and save the variable, the subcommands you can access with this variable are:
 - `show` to show the file picker.
 - `path` to get the path of the selected file.
 - `name` to get the name of the selected file.
