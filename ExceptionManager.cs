@@ -97,6 +97,10 @@ namespace MyOwnLanguageNEW
             ShowException(line, "List Index Is Outside Of Bounds.",
                 $"ERROR: The {index} index is outside of the bounds of the list, the max value is at {listCount - 1}.");
         }
+        public static void SubValueNOTFound(int line, string subValue, string type)
+        {
+            ShowException(line, "Sub Value NOT Found", $"ERROR: Unable to find the {subValue} sub value at value of type {type}. Error at line {line}.");
+        }
 
         static void ShowException(int line, string title, string message)
         {

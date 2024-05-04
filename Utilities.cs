@@ -90,7 +90,7 @@ namespace MyOwnLanguageNEW
                 {
                     foreach (string s in all.Skip(1))
                     {
-                        ExecuteAdditionalInstruction(line, actualValue, s);
+                        ExecuteAdditionalInstruction(line, ref actualValue, s);
                     }
                 }
                 /*if (variable != null)
@@ -106,17 +106,22 @@ namespace MyOwnLanguageNEW
             return strText;
         }
 
-        static void ExecuteAdditionalInstruction(int line, dynamic actualValue, string command)
+        static void ExecuteAdditionalInstruction(int line, ref dynamic actualValue, string command)
         {
-            if (command == "type")
+            if (actualValue is Variable)
             {
-                if (actualValue is Variable) { actualValue = (Variable)actualValue.GetValueType(); }
-                else { actualValue = actualValue.GetType().Name; }
+                try { actualValue = ((Variable)actualValue).subValues[command]; }
+                catch { ExceptionManager.SubValueNOTFound(line, command, actualValue.GetType().Name); }
             }
-            if (int.TryParse(command, out int index) && actualValue is Variable) { actualValue = ((Variable)actualValue).GetValueAtIndex(line, index); }
-            if (command == "title" && actualValue is OpenFileDialog) { actualValue = ((OpenFileDialog)actualValue).Title; }
-            if (command == "path" && actualValue is OpenFileDialog) { actualValue = ((OpenFileDialog)actualValue).FileName; }
-            if (command == "name" && actualValue is OpenFileDialog) { actualValue = ((OpenFileDialog)actualValue).SafeFileName; }
+            else
+            {
+                if (command == "type") { actualValue = actualValue.GetType().Name; return; }
+                if (int.TryParse(command, out int index) && actualValue is Variable) { actualValue = ((Variable)actualValue).GetValueAtIndex(line, index); return; }
+                if (command == "title" && actualValue is OpenFileDialog) { actualValue = ((OpenFileDialog)actualValue).Title; return; }
+                if (command == "path" && actualValue is OpenFileDialog) { actualValue = ((OpenFileDialog)actualValue).FileName; return; }
+                if (command == "name" && actualValue is OpenFileDialog) { actualValue = ((OpenFileDialog)actualValue).SafeFileName; return; }
+            }
+            ExceptionManager.SubValueNOTFound(line, command, actualValue.GetType().Name);
         }
 
         public static bool EvaluateIfConditions(int line, string[] command)

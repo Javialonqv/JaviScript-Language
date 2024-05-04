@@ -22,7 +22,7 @@ namespace MyOwnLanguageNEW
             if (Init.runtimeVariables.Find(v => v.name == varName) != null) { ExceptionManager.VariableAlreadyExists(line, varName); return; }
             if (varName.Contains(".")) { ExceptionManager.VariableNameNOTAllowed(line, varName); }
             if (int.TryParse(varName.Substring(0, 1), out int i)) { ExceptionManager.VariableNameNOTAllowed(line, varName); }
-            Variable var = new Variable(varName, varValue);
+            Variable var = new Variable(varName, varValue, varValue.GetType());
             Init.runtimeVariables.Add(var);
         }
 
